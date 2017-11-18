@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace TurboJpegWrapper
 {
@@ -13,19 +14,30 @@ namespace TurboJpegWrapper
             TurboJpegImport.Load();
             var i1 = new Bitmap(100, 100);
             var g = Graphics.FromImage(i1);
-            g.DrawString("Hello World!", new Font(FontFamily.GenericSansSerif,10, FontStyle.Regular), new SolidBrush(Color.Yellow), 0, 35);
-            g.DrawString("RawSize: " + GetBuffer(i1).Length.ToString("n0"), 
-                new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular), new SolidBrush(Color.Yellow), 0, 50);
-            TurboJpegWrapper.TJCompressor c = new TJCompressor();
+            var os = GetBuffer(i1).Length;
+            string hw = "Hello World!", osi = "RawSize: " + os.ToString("n0");
+            g.DrawString(hw, new Font(FontFamily.GenericSansSerif,10, FontStyle.Regular), new SolidBrush(Color.Yellow), 0, 35);
+            g.DrawString(osi, new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular), new SolidBrush(Color.Yellow), 0, 50);
+            //TurboJpegWrapper.TJCompressor c = new TJCompressor();
+            TurboJpegWrapper.TJCompressor c = new TJCompressor(true);
             var data = c.Compress(i1, TJSubsamplingOptions.TJSAMP_420, 50, TJFlags.FASTDCT);
             TurboJpegWrapper.TJDecompressor d = new TJDecompressor();
             var i2 = d.Decompress(data, System.Drawing.Imaging.PixelFormat.Format32bppArgb, TJFlags.FASTDCT);
             g = Graphics.FromImage(i2);
-            g.DrawString("JpegSize: " + data.Length.ToString("n0"), 
-                new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular), new SolidBrush(Color.Red), 0, 65);
-            i1.Save(Environment.CurrentDirectory + "\\TurboJpegWrapper.Test.1.bmp");
-            i2.Save(Environment.CurrentDirectory + "\\TurboJpegWrapper.Test.2.bmp");
-            
+            var ns = data.Length;
+            var nsi = "JpegSize: " + ns.ToString("n0");
+            g.DrawString(nsi, new Font(FontFamily.GenericSansSerif, 8, FontStyle.Regular), new SolidBrush(Color.Red), 0, 65);
+            i1.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) , "TurboJpegWrapper.Test.1.bmp"));
+            i2.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "TurboJpegWrapper.Test.2.bmp"));
+            foreach (var s in new[] { hw, osi, nsi }) Console.WriteLine(s);
+            if (os <= ns)
+                throw new Exception("No jpeg compression occurred.");
+            else if ((os != 40000) || (ns != 1790))
+                throw new Exception("Compression occurred but either Original image bytes: " + os + " or Compressed image bytes: " + ns + " were not as expected.");
+            else
+                Console.WriteLine("Compression succeeded.");
+            Console.WriteLine("enter to quit...");
+            Console.ReadLine();
 
         }
 

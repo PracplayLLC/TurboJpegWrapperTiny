@@ -50,6 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConsoleTest.cs" />
+    <Compile Include="Stugo.Interop\EntryPointAttribute.cs" />
+    <Compile Include="Stugo.Interop\Linux\LinuxUnmanagedModuleLoader.cs" />
+    <Compile Include="Stugo.Interop\UnmanagedModuleCollection.cs" />
+    <Compile Include="Stugo.Interop\UnmanagedModuleLoaderBase.cs" />
+    <Compile Include="Stugo.Interop\Windows\WindowsUnmanagedModuleLoader.cs" />
+    <Compile Include="TurboJpegImport_xplat.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

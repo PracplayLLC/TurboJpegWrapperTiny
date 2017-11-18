@@ -22,9 +22,17 @@ namespace TurboJpegWrapper
         /// <exception cref="TJException">
         /// Throws if internal compressor instance can not be created
         /// </exception>
-        public TJCompressor()
+        public TJCompressor(bool iscrossplatform = false)
         {
-            _compressorHandle = TurboJpegImport.tjInitCompress();
+            isXPlatform = iscrossplatform;
+            if (iscrossplatform)
+            {
+                _compressorHandle = TurboJpegImport_xplat.tjInitCompressX();
+            }
+            else
+            {
+                _compressorHandle = TurboJpegImport.tjInitCompress();
+            }
 
             if (_compressorHandle == IntPtr.Zero)
             {
@@ -78,6 +86,11 @@ namespace TurboJpegWrapper
             }
         }
 
+        /// <summary>
+        /// whether compressor uses cross platform calls
+        /// </summary>
+        public bool isXPlatform = false;
+
 
         /// <summary>
         /// Compresses input image to the jpeg format with specified quality
@@ -119,12 +132,15 @@ namespace TurboJpegWrapper
 
             var tjPixelFormat = TJUtils.ConvertPixelFormat(pixelFormat);
             CheckOptionsCompatibilityAndThrow(subSamp, tjPixelFormat);
+            TJDoCompDel compresscall =  TurboJpegImport.tjCompress2;
+            if (isXPlatform)
+                compresscall = TurboJpegImport_xplat.tjCompressX;
 
             var buf = IntPtr.Zero;
             ulong bufSize = 0;
             try
             {
-                var result = TurboJpegImport.tjCompress2(
+                var result = compresscall(
                     _compressorHandle,
                     srcPtr,
                     width,
