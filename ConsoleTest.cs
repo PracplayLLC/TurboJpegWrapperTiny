@@ -11,6 +11,7 @@ namespace TurboJpegWrapper
     {
         public static void Main(string[] args)
         {
+            TurboJpegImport_control.isAutoLoadLibrary = false;
             TurboJpegImport.Load();
             var i1 = new Bitmap(100, 100);
             var g = Graphics.FromImage(i1);

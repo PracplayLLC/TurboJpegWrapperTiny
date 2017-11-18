@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D13C6015-A1FE-4987-BF3A-658765448A58}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TurboJpegWrapper</RootNamespace>
     <AssemblyName>TurboJpegWrapper</AssemblyName>
@@ -35,8 +35,7 @@
     <DocumentationFile>bin\Release\TurboJpegWrapper.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>TurboJpegWrapper.ConsoleTest</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -55,6 +54,7 @@
     <Compile Include="Stugo.Interop\UnmanagedModuleCollection.cs" />
     <Compile Include="Stugo.Interop\UnmanagedModuleLoaderBase.cs" />
     <Compile Include="Stugo.Interop\Windows\WindowsUnmanagedModuleLoader.cs" />
+    <Compile Include="TurboJpegImport_control.cs" />
     <Compile Include="TurboJpegImport_xplat.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="NativeMethods.cs" />

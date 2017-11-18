@@ -14,10 +14,14 @@ namespace TurboJpegWrapper
     {
         private const string UnmanagedLibrary = "turbojpeg";
 
+
 #if !NETSTANDARD1_3
         static TurboJpegImport()
         {
-            Load();
+            if (TurboJpegImport_control.isAutoLoadLibrary)
+            {
+                Load(TurboJpegImport_control.isThrowOnPlatformErrors);
+            }
         }
 #endif
         public static bool LibraryFound
