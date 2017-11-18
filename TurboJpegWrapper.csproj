@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D13C6015-A1FE-4987-BF3A-658765448A58}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TurboJpegWrapper</RootNamespace>
     <AssemblyName>TurboJpegWrapper</AssemblyName>
@@ -35,7 +35,8 @@
     <DocumentationFile>bin\Release\TurboJpegWrapper.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>TurboJpegWrapper.ConsoleTest</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
