@@ -27,13 +27,13 @@ namespace TurboJpegWrapper
         }
 
 #if !NETSTANDARD1_3
-        public static void Load()
+        public static void Load(bool isthrowonplatformerrors = true)
         {
-            Load(AppDomain.CurrentDomain.SetupInformation.ApplicationBase);
+            Load(AppDomain.CurrentDomain.SetupInformation.ApplicationBase,isthrowonplatformerrors);
         }
 #endif
 
-        public static void Load(string directory)
+        public static void Load(string directory, bool isthrowonplatformerrors = true)
         {
 #if !NETSTANDARD1_3
             if (directory == null)
@@ -90,12 +90,13 @@ namespace TurboJpegWrapper
 
                 LibraryFound = true;
             }
-            else
+            else if (isthrowonplatformerrors)
             {
                 throw new NotSupportedException("Quamotion.TurboJpegWrapper is supported on Windows (.NET FX, .NET Core), Linux (.NET Core) and OS X (.NET Core)");
             }
 #else
-            throw new NotSupportedException("Load is supported on .NET FX and Mono only. When using .NET Core, add the runtime.*.Quamotion.TurboJpegWrapper packages to your project to add the native libraries.");
+            if (isthrowonplatformerrors)
+                throw new NotSupportedException("Load is supported on .NET FX and Mono only. When using .NET Core, add the runtime.*.Quamotion.TurboJpegWrapper packages to your project to add the native libraries.");
 #endif
         }
 

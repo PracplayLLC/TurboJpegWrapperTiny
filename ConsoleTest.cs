@@ -35,7 +35,7 @@ namespace TurboJpegWrapper
             else if ((os != 40000) || (ns != 1790))
                 throw new Exception("Compression occurred but either Original image bytes: " + os + " or Compressed image bytes: " + ns + " were not as expected.");
             else
-                Console.WriteLine("Compression succeeded.");
+                Console.WriteLine("Compression succeeded.  "+(c.isXPlatform ? "[cross-platform]" : "[dllimport]"));
             Console.WriteLine("enter to quit...");
             Console.ReadLine();
 
